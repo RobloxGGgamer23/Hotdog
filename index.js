@@ -167,7 +167,7 @@ client.on('message', async message => {
      }
 
      const guildStats = stats[message.guild.id]
-     if (message.author.id in guildStats === false) {
+     if (message.author.id in guildStats === false.catch(console.error())) {
          guildStats[message.author.id] = {
              xp: 0,
              level: 0,
@@ -189,6 +189,7 @@ client.on('message', async message => {
     }
 
     if (command === 'rank' || command === 'level') {
+
         message.channel.send('the rank cmd has worked')
         const rankEmbed = Discord.MessageEmbed()
          .setTitle(`${message.author.username}'s rank`)
