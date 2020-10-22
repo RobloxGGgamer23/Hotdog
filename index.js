@@ -189,6 +189,7 @@ client.on('message', async message => {
     }
 
     if (command === 'rank' || command === 'level') {
+        message.channel.send('the rank cmd has worked')
         const rankEmbed = Discord.MessageEmbed()
          .setTitle(`${message.author.username}'s rank`)
          .addField('level', `your level is ${userStats.level}, your xp is ${userStats.xp}`)
