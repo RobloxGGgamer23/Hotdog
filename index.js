@@ -187,11 +187,20 @@ client.on('message', async message => {
         if (userStats.xp >= xpToNextLevel) {
             userStats.level ++;
             userStats.xp = userStats.xp - xpToNextLevel
-            message.reply("congrats "+" you have reached level " +userStats.level +'!')
+            message.reply("congrats "+ message.author + " you have reached level " +userStats.level +'!')
         }
 
         jsonfile.writeFileSync('stats.json',stats);
     };  
+
+     if (command === 'rank' || command === 'lvl') {
+         const rankEmbed = new Discord.MessageEmbed()
+          .setTitle(message.author.username + "'s rank")
+          .addField('level', `Your xp is: ${userStats.xp} and your level is ${userStats.level}`)
+          .setImage('https://cdn.discordapp.com/attachments/752343553648361554/766521835847942155/images_47.jpeg')
+          .setColor(0x76448A);
+        message.channel.send(rankEmbed)
+     }
      // admin cmds
 
      if (message.member.hasPermission('ADMINISTRATOR')) {
