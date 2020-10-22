@@ -174,8 +174,8 @@ client.on('message', async message => {
              last_message: 0,
          };
      }
+     const userStats = guildStats[message.author.id]
      if (Date.now() - userStats.last_message > 60000) {
-        const userStats = guildStats[message.author.id]
         userStats += random.int(10, 20);
 
         console.log(`${message.author} now has ${userStats.xp}`)
@@ -468,6 +468,15 @@ client.on('message', async message => {
             .setTitle(message.author.username)
             .addField('Command', 'invite')
             .addField('Allies', 'inv')
+            .addField('Usage', 'command')
+            .addField('Permissions', 'NaN')
+            .setColor(0x76448A);
+            message.channel.send(HelpPictures)
+        } else if (args[0] === 'rank' || args[1] === 'level') {
+            const HelpPictures = new Discord.MessageEmbed()
+            .setTitle(message.author.username)
+            .addField('Command', 'rank')
+            .addField('Allies', 'level')
             .addField('Usage', 'command')
             .addField('Permissions', 'NaN')
             .setColor(0x76448A);
