@@ -204,19 +204,6 @@ client.on('message', async message => {
           .setImage('https://cdn.discordapp.com/attachments/752343553648361554/766521835847942155/images_47.jpeg')
           .setColor(0x76448A);
         message.channel.send(rankEmbed)
-         if (command === 'rank' || command === 'lvl') {
-            const card = await canvas.rank({
-                username: message.author.username,
-                discrim: message.author.discriminator,
-                level: userStats.level,
-                neededXP: xpToNextLevel,
-                currentXP: userStats.xp,
-                avatarULR: message.author.displayAvatarURL({format: "jpg"}),
-                color: 'white'
-            });
-            const attachment = new Discord.MessageAttachment(card, "rank.png");
-            message.channel.send(attachment)
-        }
      }
      // admin cmds
 
