@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 const cheerio = require('cheerio');
 const request = require('request');
-const fs = require('fs');
 const { get } = require('request');
 const random = require('random');
+const fs = require("fs");
 const jsonfile = require('jsonfile');
 
 const client = new Discord.Client();
@@ -13,9 +13,8 @@ const prefix = '`'
 client.commands = new Discord.Collection();
 
 var stats = {};
-
-if (fs.existsSync('stats.json')) {
-    stats = jsonfile.readFileSync('stats.json')
+if (fs.existsSync('stats.json')){
+    stats = jsonfile.readFileSync('stats.json');
 }
 
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
@@ -160,45 +159,39 @@ client.on('message', async message => {
     
     }
 
-     // leveling
      
-     if (message.guild.id in stats === false) {
+
+    if (message.guild.id in stats === false) {
         stats[message.guild.id] = {};
-     }
+    }
+    
+    const guildStats = stats[message.guild.id];
 
-     const guildStats = stats[message.guild.id]
-     if (message.author.id in guildStats === false.catch(console.error())) {
-         guildStats[message.author.id] = {
-             xp: 0,
-             level: 0,
-             last_message: 0,
-         };
-     }
-     const userStats = guildStats[message.author.id]
-     if (Date.now() - userStats.last_message > 60000) {
-        userStats += random.int(10, 20);
+    if (message.author.id in guildStats === false) {
+        guildStats[message.author.id] = {
+            xp: 0,
+            level: 0,
+            last_message: 0
+        };
+    }
 
-        console.log(`${message.author} now has ${userStats.xp}`)
 
-        const xpToNextLevel = 5 * Math.pow(userStats.level, 2) + 50 * userStats.level + 100;
+    const userStats = guildStats[message.author.id];
+    if (Date.now() - userStats.last_message > 60000) {
+        userStats.xp += random.int(15, 30);
+        userStats.last_message = Date.now();
+        console.log(message.author.username +" now has " + userStats.xp);
+
+        const xpToNextLevel = 5 * Math.pow(userStats.level, 5) +50 * userStats.level + 250
+
         if (userStats.xp >= xpToNextLevel) {
             userStats.level ++;
             userStats.xp = userStats.xp - xpToNextLevel
-            message.channel.send(`congrats ${message.author} you reached level ${userStats.level}`)
+            message.reply("congrats "+" you have reached level " +userStats.level +'!')
         }
-    }
 
-    if (command === 'rank' || command === 'level') {
-
-        message.channel.send('the rank cmd has worked')
-        const rankEmbed = Discord.MessageEmbed()
-         .setTitle(`${message.author.username}'s rank`)
-         .addField('level', `your level is ${userStats.level}, your xp is ${userStats.xp}`)
-         .setDescription('https://media.discordapp.net/attachments/767778042101497886/768623903190286386/Screenshot_312.png');
-        message.channel.send(rankEmbed)
-    }
-
-     jsonfile.writeFileSync('stats.json', stats)
+        jsonfile.writeFileSync('stats.json',stats);
+    };  
      // admin cmds
 
      if (message.member.hasPermission('ADMINISTRATOR')) {
@@ -469,15 +462,6 @@ client.on('message', async message => {
             .setTitle(message.author.username)
             .addField('Command', 'invite')
             .addField('Allies', 'inv')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'rank' || args[1] === 'level') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'rank')
-            .addField('Allies', 'level')
             .addField('Usage', 'command')
             .addField('Permissions', 'NaN')
             .setColor(0x76448A);
