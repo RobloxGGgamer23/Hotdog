@@ -205,7 +205,7 @@ client.on('message', async message => {
             if (args[0] === member) {
                 const memberEmbed = new Discord.MessageEmbed()
                  .setTitle(member + "'s rank")
-                 .addField('level', `Your xp is: ${membe.userStats.xp} and your level is ${member.userStats.level}`)
+                 .addField('level', `his xp is: ${member.userStats.xp} and his level is ${member.userStats.level}`)
                  .setImage('https://cdn.discordapp.com/attachments/752343553648361554/766521835847942155/images_47.jpeg')
                  .setColor(0x76448A);
                 message.channel.send(memberEmbed)
