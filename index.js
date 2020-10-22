@@ -6,6 +6,9 @@ const random = require('random');
 const fs = require("fs");
 const jsonfile = require('jsonfile');
 
+const Canvacord = require('canvacord');
+const canvas = new Canvacord();
+
 const client = new Discord.Client();
 const prefix = '`'
 
@@ -202,12 +205,17 @@ client.on('message', async message => {
           .setColor(0x76448A);
         message.channel.send(rankEmbed)
          if (command === 'rank' || command === 'lvl') {
-            const memberEmbed = new Discord.MessageEmbed()
-             .setTitle(member + "'s rank")
-             .addField('level', `his xp is: ${member.userStats.xp} and his level is ${member.userStats.level}`)
-             .setImage('https://cdn.discordapp.com/attachments/752343553648361554/766521835847942155/images_47.jpeg')
-             .setColor(0x76448A);
-            message.channel.send(memberEmbed)
+            const card = await canvas.rank({
+                username: message.author.username,
+                discrim: message.author.discriminator,
+                level: userStats.level,
+                neededXP: xpToNextLevel,
+                currentXP: userStats.xp,
+                avatarULR: message.author.displayAvatarURL({format: "jpg"}),
+                color: 'white'
+            });
+            const attachment = new Discord.MessageAttachment(card, "rank.png");
+            message.channel.send(attachment)
         }
      }
      // admin cmds
