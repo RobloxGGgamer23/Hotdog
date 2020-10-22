@@ -192,7 +192,8 @@ client.on('message', async message => {
         const rankEmbed = Discord.MessageEmbed()
          .setTitle(`${message.author.username}'s rank`)
          .addField('level', `your level is ${userStats.level}, your xp is ${userStats.xp}`)
-         .setDescription('https://media.discordapp.net/attachments/767778042101497886/768623903190286386/Screenshot_312.png')
+         .setDescription('https://media.discordapp.net/attachments/767778042101497886/768623903190286386/Screenshot_312.png');
+        message.channel.send(rankEmbed)
     }
 
      jsonfile.writeFileSync('stats.json', stats)
