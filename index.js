@@ -201,15 +201,13 @@ client.on('message', async message => {
           .setImage('https://cdn.discordapp.com/attachments/752343553648361554/766521835847942155/images_47.jpeg')
           .setColor(0x76448A);
         message.channel.send(rankEmbed)
-        if (arg[0] === 'member') {
-            if (args[0] === member) {
-                const memberEmbed = new Discord.MessageEmbed()
-                 .setTitle(member + "'s rank")
-                 .addField('level', `his xp is: ${member.userStats.xp} and his level is ${member.userStats.level}`)
-                 .setImage('https://cdn.discordapp.com/attachments/752343553648361554/766521835847942155/images_47.jpeg')
-                 .setColor(0x76448A);
-                message.channel.send(memberEmbed)
-            }
+         if (command === 'rank' || command === 'lvl') {
+            const memberEmbed = new Discord.MessageEmbed()
+             .setTitle(member + "'s rank")
+             .addField('level', `his xp is: ${member.userStats.xp} and his level is ${member.userStats.level}`)
+             .setImage('https://cdn.discordapp.com/attachments/752343553648361554/766521835847942155/images_47.jpeg')
+             .setColor(0x76448A);
+            message.channel.send(memberEmbed)
         }
      }
      // admin cmds
@@ -491,7 +489,7 @@ client.on('message', async message => {
             .addField('Command', 'rank')
             .addField('Xp will give', '15 - 25')
             .addField('Allies', 'lvl')
-            .addField('Usage', 'command (or) command [mentionUser]')
+            .addField('Usage', 'command')
             .addField('Permissions', 'NaN')
             .setColor(0x76448A);
             message.channel.send(HelpPictures)
