@@ -8,7 +8,6 @@ const jsonfile = require('jsonfile');
 
 const client = new Discord.Client();
 const prefix = '`'
-const arg = message.content.slice(prefix.length).trim().split(/ +/);
 
 client.commands = new Discord.Collection();
 
@@ -31,6 +30,7 @@ client.on('message', async message => {
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+    const arg = message.content.slice(prefix.length).trim().split(/ +/);
 
     if (command === 'ping') {
         console.log(args[0])
