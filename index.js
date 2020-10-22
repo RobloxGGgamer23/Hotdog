@@ -162,12 +162,12 @@ client.on('message', async message => {
 
      // leveling
      
-     if (!message.guild.id in stats) {
+     if (message.guild.id in stats === false) {
         stats[message.guild.id] = {};
      }
 
      const guildStats = stats[message.guild.id]
-     if (!message.author.id in guildStats) {
+     if (message.author.id in guildStats === false) {
          guildStats[message.author.id] = {
              xp: 0,
              level: 0,
