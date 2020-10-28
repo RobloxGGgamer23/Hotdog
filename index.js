@@ -197,14 +197,21 @@ client.on('message', async message => {
     };  
 
      if (command === 'rank' || command === 'lvl') {
-         const member = message.mentions.users.first();
+         const member = message.users.first();
          const rankEmbed = new Discord.MessageEmbed()
           .setTitle(message.author.username + "'s rank")
           .addField('level', `Your xp is: ${userStats.xp} and your level is ${userStats.level}`)
           .setImage('https://cdn.discordapp.com/attachments/752343553648361554/766521835847942155/images_47.jpeg')
           .setColor(0x76448A);
         message.channel.send(rankEmbed)
-     }
+     } 
+
+     if (command === 'meme' || command === 'memes') {
+        const memeEmbed = new Discord.MessageEmbed()
+         .setTitle('meme of the day')
+         .setDescription(meme(message))
+        message.channel.send(memeEmbed)
+     } 
      // admin cmds
 
      if (message.member.hasPermission('ADMINISTRATOR')) {
@@ -244,7 +251,7 @@ client.on('message', async message => {
                         message.reply('You cannot ban my friends!')
                     }
                     member.ban({
-                        reason: 'You have been BANNED by the owner or a mod!'
+                        reason: 'not following the rules!'
                     }).then(() => {
                         message.reply(`${userBan} has been BANNED.`)
                     })
@@ -256,7 +263,7 @@ client.on('message', async message => {
             var member = message.guild.member(NewRole);
             message.guild.roles.create({
                 data: {
-                    name: `${message.content.slice(prefix.length + command.length).split(/ +/)[1]}`,
+                    name: `${args[0]}`,
                     color: 'BLUE' || 'RED',
                     mentionable: true,
                     permissions: ['READ_MESSAGE_HISTORY', 'SEND_MESSAGES', 'CREATE_INSTANT_INVITE', 'ADD_REACTIONS'],
@@ -291,205 +298,284 @@ client.on('message', async message => {
     } 
 
 
-    if (command === 'cmd') {
-        const HelpEmbed = new Discord.MessageEmbed()
-         .setTitle('Commands')
-         .addField('Pictures','`adobo`, `hotdog`, `lansones`, `tinola`, `siopao`')
-         .addField('Fun','`ping`, `lol`, `search`')
-         .addField('Admins', '`say`, `kick`, `ban`, `newrole`, `clear`')
-         .addField('Emotes', '`ship`, `dab`')
-         .addField('Utility', '`invite`')
-         .setFooter('note: make sure when using help cmd pls use "`help adobo"')
-         .setColor(0x76448A);
-        message.channel.send(HelpEmbed)
+    if (command === 'help') {
+        if (!args[0]) {
+            const HelpEmbed = new Discord.MessageEmbed()
+            .setTitle('Commands')
+            .addField('Pictures','`adobo`, `hotdog`, `lansones`, `tinola`, `siopao`')
+            .addField('Fun','`ping`, `lol`, `search`, `meme`')
+            .addField('Admins', '`say`, `kick`, `ban`, `newrole`, `clear`')
+            .addField('Emotes', '`ship`, `dab`')
+            .addField('Utility', '`invite`')
+            .setFooter('note: make sure when using help cmd pls use "`help adobo"')
+            .setColor(0x76448A);
+            message.channel.send(HelpEmbed)
+        } else if (arg[0] === 'help') {
+            if (args[0] === 'pictures' || args[0] === 'pics' || args[0] === 'pic') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle('Pictures')
+                .setDescription('`adobo`, `hotdog`, `lansones`, `tinola`, `siopao`')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'Admins' || args[0] === 'mod' || args[0] === 'mods') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle('Admins')
+                .setDescription('`say`, `kick`, `ban`, `newrole`, `clear`')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'Fun' || args[0] === 'happy' || args[0] === 'funny') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle('Fun')
+                .setDescription('`ping`, `lol`, `search`')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'Utility' || args[0] === 'Utilities' || args[0] === 'U') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle('Utility')
+                .setDescription('`Invite`')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'Emotes') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle('Emotes')
+                .setDescription('`ship`, `dab`')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'Adobo' || args[0] === 'manacc' || args[0] === 'sarap') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'adobo')
+                .addField('Allies', 'adobopic')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'hotdog' || args[0] === 'uhtdog') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'hotdog')
+                .addField('Allies', 'hotdogpic')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'lansones') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'lansones')
+                .addField('Allies', 'NaN')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'Tinola') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'Tinola')
+                .addField('Allies', 'NaN')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'Siopao') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'siopao')
+                .addField('Allies', 'siopaopics')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'say' || args[0] === 'said') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'say')
+                .addField('Allies', 'NaN')
+                .addField('Usage', 'command [words]')
+                .addField('Permissions', 'Mod')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'kick' || args[0] === 'k') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'kick')
+                .addField('Allies', 'k')
+                .addField('Usage', 'command [mentionUser]')
+                .addField('Permissions', 'Mod')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'ban' || args[0] === 'b') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'ban')
+                .addField('Allies', 'b')
+                .addField('Usage', 'command [mentionUser]')
+                .addField('Permissions', 'Mod')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'newrole') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'newrole')
+                .addField('Allies', 'NaN')
+                .addField('Usage', 'command [role name]')
+                .addField('Permissions', 'Mod')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'clear') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'clear')
+                .addField('Allies', 'Delete')
+                .addField('Usage', 'command [number to delete] [reason]')
+                .addField('Permissions', 'Mod')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'ping' || args[1] === 'pong') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'ping')
+                .addField('Allies', 'NaN')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'lol') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'lol')
+                .addField('Allies', 'hahaha, laugh')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'search' || args[1] === 'google') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'search')
+                .addField('Allies', 'google')
+                .addField('Usage', 'command [words]')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            }  else if (args[0] === 'ship') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'ship')
+                .addField('Allies', 'likes')
+                .addField('Usage', 'command [you want to ship]')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            }  else if (args[0] === 'dab') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'dab')
+                .addField('Allies', 'nice')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            }  else if (args[0] === 'invite' || args[1] === 'inv') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'invite')
+                .addField('Allies', 'inv')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'rank' || args[1] === 'lvl') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'rank')
+                .addField('Xp will give', '15 - 25')
+                .addField('Allies', 'lvl')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            } else if (args[0] === 'meme' || args[1] === 'memes') {
+                const HelpPictures = new Discord.MessageEmbed()
+                .setTitle(message.author.username)
+                .addField('Command', 'meme')
+                .addField('Allies', 'memes')
+                .addField('Usage', 'command')
+                .addField('Permissions', 'NaN')
+                .setColor(0x76448A);
+                message.channel.send(HelpPictures)
+            }
+        }
     }
-    if (arg[0] === 'help') {
-        if (args[0] === 'pictures' || args[0] === 'pics' || args[0] === 'pic') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle('Pictures')
-            .setDescription('`adobo`, `hotdog`, `lansones`, `tinola`, `siopao`')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'Admins' || args[0] === 'mod' || args[0] === 'mods') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle('Admins')
-            .setDescription('`say`, `kick`, `ban`, `newrole`, `clear`')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'Fun' || args[0] === 'happy' || args[0] === 'funny') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle('Fun')
-            .setDescription('`ping`, `lol`, `search`')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'Utility' || args[0] === 'Utilities' || args[0] === 'U') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle('Utility')
-            .setDescription('`Invite`')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'Emotes') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle('Emotes')
-            .setDescription('`ship`, `dab`')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'Adobo' || args[0] === 'manacc' || args[0] === 'sarap') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'adobo')
-            .addField('Allies', 'adobopic')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'hotdog' || args[0] === 'uhtdog') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'hotdog')
-            .addField('Allies', 'hotdogpic')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'lansones') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'lansones')
-            .addField('Allies', 'NaN')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'Tinola') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'Tinola')
-            .addField('Allies', 'NaN')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'Siopao') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'siopao')
-            .addField('Allies', 'siopaopics')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'say' || args[0] === 'said') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'say')
-            .addField('Allies', 'NaN')
-            .addField('Usage', 'command [words]')
-            .addField('Permissions', 'Mod')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'kick' || args[0] === 'k') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'kick')
-            .addField('Allies', 'k')
-            .addField('Usage', 'command [mentionUser]')
-            .addField('Permissions', 'Mod')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'ban' || args[0] === 'b') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'ban')
-            .addField('Allies', 'b')
-            .addField('Usage', 'command [mentionUser]')
-            .addField('Permissions', 'Mod')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'newrole') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'newrole')
-            .addField('Allies', 'NaN')
-            .addField('Usage', 'command [role name]')
-            .addField('Permissions', 'Mod')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'clear') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'clear')
-            .addField('Allies', 'Delete')
-            .addField('Usage', 'command [number to delete] [reason]')
-            .addField('Permissions', 'Mod')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'ping' || args[1] === 'pong') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'ping')
-            .addField('Allies', 'NaN')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'lol') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'lol')
-            .addField('Allies', 'hahaha, laugh')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'search' || args[1] === 'google') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'search')
-            .addField('Allies', 'google')
-            .addField('Usage', 'command [words]')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        }  else if (args[0] === 'ship') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'ship')
-            .addField('Allies', 'likes')
-            .addField('Usage', 'command [you want to ship]')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        }  else if (args[0] === 'dab') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'dab')
-            .addField('Allies', 'nice')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        }  else if (args[0] === 'invite' || args[1] === 'inv') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'invite')
-            .addField('Allies', 'inv')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } else if (args[0] === 'rank' || args[1] === 'lvl') {
-            const HelpPictures = new Discord.MessageEmbed()
-            .setTitle(message.author.username)
-            .addField('Command', 'rank')
-            .addField('Xp will give', '15 - 25')
-            .addField('Allies', 'lvl')
-            .addField('Usage', 'command')
-            .addField('Permissions', 'NaN')
-            .setColor(0x76448A);
-            message.channel.send(HelpPictures)
-        } 
-    }
+
+    function meme(message){
+ 
+        var options = {
+            url: "http://results.dogpile.com/serp?qc=images&q=" + "meme",
+            method: "GET",
+            headers: {
+                "Accept": "text/html",
+                "User-Agent": "Chrome"
+            }
+        };
+        request(options, function(error, response, responseBody) {
+            if (error) {
+                return;
+            }
+     
+     
+            $ = cheerio.load(responseBody);
+     
+     
+            var links = $(".image a.link");
+     
+            var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+           
+            console.log(urls);
+     
+            if (!urls.length) {
+               
+                return;
+            }     
+            // Send result
+            message.channel.send( urls[Math.floor(Math.random() * urls.length)]);
+        });
+    };
+     // lansones
+     function lansones(message){
+ 
+        var options = {
+            url: "http://results.dogpile.com/serp?qc=images&q=" + "Lansones Images",
+            method: "GET",
+            headers: {
+                "Accept": "text/html",
+                "User-Agent": "Chrome"
+            }
+        };
+
+        request(options, function(error, response, responseBody) {
+            if (error) {
+                return;
+            }
+     
+     
+            $ = cheerio.load(responseBody);
+     
+     
+            var links = $(".image a.link");
+     
+            var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+           
+            console.log(urls);
+     
+            if (!urls.length) {
+               
+                return;
+            }     
+            // Send result
+            message.channel.send( urls[Math.floor(Math.random() * urls.length)]);
+        });
+    };
      // lansones
      function lansones(message){
  
